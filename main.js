@@ -1,5 +1,5 @@
 class Proclivity {
-    constructor(name, definition, school, type, env, self, others, planes, bases, sources, elements, subCategories) {
+    constructor(name, definition, school, type, env, self, others, plane, basis, source, element, subCategory) {
         this._name = name;
         this._definition = definition;
         this._school = school;
@@ -7,11 +7,11 @@ class Proclivity {
         this._env = env;
         this._self = self;
         this._others = others;
-        this._planes = planes;
-        this._bases = bases;
-        this._sources = sources;
-        this._elements = elements;
-        this._subCategories = subCategories;
+        this._plane = plane;
+        this._basis = basis;
+        this._source = source;
+        this._element = element;
+        this._subCategory = subCategory;
     }
     get name() {
         return this._name;
@@ -35,19 +35,19 @@ class Proclivity {
         return this._others;
     }
     get plane() {
-        return this._planes;
+        return this._plane;
     }
     get basis() {
-        return this._bases;
+        return this._basis;
     }
     get source() {
-        return this._sources;
+        return this._source;
     }
     get element() {
-        return this._elements;
+        return this._element;
     }
     get subCategory() {
-        return this._subCategories;
+        return this._subCategory;
     }
 }
 const abacomancy = new Proclivity("ABACOMANCY", "USING SAND TO LEARN OF THE FUTURE", "DIVINATION", "CLAIRVOYANCE", true, false, false, ["ASTRAL", "PHYSICAL"], [], ["ELEMENTAL"], ["EARTH"], []);
@@ -82,70 +82,52 @@ proclivities.forEach(proclivity => {
     </tr>`;
 });
 
-// fill filter selects
-const fillSelect = filter => {
+const filterableColumns = ["plane", "basis"/*, "source", "element", "subCategory"*/];
+
+// filter rows by selected attribute
+const filterRows = () => {
+    const filterTest = (filter, index) => {
+        if (!document.getElementById(`${filter}FilterSelect`).value) return true;
+        if (document.getElementById(`${filter}Just`).checked) {
+            return proclivities[index][filter].length === 1 && proclivities[index][filter][0] === document.getElementById(`${filter}FilterSelect`).value;
+        }
+        else {
+            return proclivities[index][filter.toLowerCase()].includes(document.getElementById(`${filter}FilterSelect`).value);
+        }
+    };
+    for (let i = 0; i < document.getElementsByClassName("proclivityRow").length; i++) {
+        document.getElementsByClassName("proclivityRow")[i].style.display = "none";
+        if (filterTest("plane", i) && filterTest("basis", i)) document.getElementsByClassName("proclivityRow")[i].style.display = "table-row";
+    }
+};
+
+filterableColumns.forEach(column => {
+    // fill filter selects
     let options = [];
     proclivities.forEach(proclivity => {
-        proclivity[filter].forEach(option => {
+        proclivity[column].forEach(option => {
             if (!options.includes(option)) options.push(option);
         });
     });
     options.forEach(option => {
-        document.getElementById(`${filter}FilterSelect`).innerHTML += `<option value="${option}">${option}</option>`;
+        document.getElementById(`${column}FilterSelect`).innerHTML += `<option value="${option}">${option}</option>`;
     });
-};
-fillSelect("plane");
-fillSelect("basis");
 
-const selectFilter = filter => {
-    document.getElementById(`${filter}FilterSelect`).onchange = () => {
-        for (let i = 0; i < document.getElementsByClassName("proclivityRow").length; i++) {
-            if (true/* TO-DO: account for other filters */) document.getElementsByClassName("proclivityRow")[i].style.display = "table-row";
-            if (document.getElementsByClassName("proclivityRow")[i].style.display !== "none" && document.getElementById(`${filter}FilterSelect`).value && ( // select input not empty
-                (!proclivities[i][filter.toLowerCase()].includes(document.getElementById(`${filter}FilterSelect`).value)) || 
-                // just checkbox
-                (document.getElementById(`${filter}Just`).checked && (
-                    proclivities[i][filter].length !== 1 || 
-                    proclivities[i][filter][0] !== document.getElementById(`${filter}FilterSelect`).value
-                ))
-            )) document.getElementsByClassName("proclivityRow")[i].style.display = "none";
-        }
-    };
-};
-selectFilter("plane");
-selectFilter("basis");
-
-// click planeJust
-document.getElementById("planeJust").onclick = () => {
-    if (document.getElementById("planeFilterSelect").value) {
-        if (document.getElementById("planeJust").checked) {
-            for (let i = 0; i < document.getElementsByClassName("proclivityRow").length; i++) {
-                if (document.getElementsByClassName("proclivityRow")[i].style.display !== "none" && (proclivities[i].plane.length !== 1 || proclivities[i].plane[0] !== document.getElementById("planeFilterSelect").value)) document.getElementsByClassName("proclivityRow")[i].style.display = "none";
-            }
-        }
-        else {
-            for (let i = 0; i < document.getElementsByClassName("proclivityRow").length; i++) {
-                if (document.getElementsByClassName("proclivityRow")[i].style.display === "none" && proclivities[i].plane.includes(document.getElementById("planeFilterSelect").value)) document.getElementsByClassName("proclivityRow")[i].style.display = "table-row";
-            }
-        }
-    }
-};
-
-// filter expand buttons
-const expandButton = filter => {
+    // filter expand buttons
     let filterExpanded = false;
-    document.getElementById(`${filter}FilterButton`).onclick = () => {
+    document.getElementById(`${column}FilterButton`).onclick = () => {
         if ((filterExpanded)) {
-            document.getElementById(`${filter}FilterDiv`).style.display = "none";
-            document.getElementById(`${filter}FilterButton`).innerHTML = "&#9660;";
+            document.getElementById(`${column}FilterDiv`).style.display = "none";
+            document.getElementById(`${column}FilterButton`).innerHTML = "&#9660;";
             filterExpanded = false;
         }
         else {
-            document.getElementById(`${filter}FilterDiv`).style.display = "block";
-            document.getElementById(`${filter}FilterButton`).innerHTML = "&#9650;";
+            document.getElementById(`${column}FilterDiv`).style.display = "block";
+            document.getElementById(`${column}FilterButton`).innerHTML = "&#9650;";
             filterExpanded = true;
         }
     };
-};
-expandButton("plane");
-expandButton("basis");
+
+    document.getElementById(`${column}FilterSelect`).onchange = filterRows;
+    document.getElementById(`${column}Just`).onchange = filterRows;
+});
