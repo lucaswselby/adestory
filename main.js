@@ -1,5 +1,5 @@
 class Proclivity {
-    constructor(name, definition, school, type, env, self, others, plane, basis, source, element, subCategory) {
+    constructor(name, definition, school, type, env, self, others, plane, basis, source, element, subcategories) {
         this._name = name;
         this._definition = definition;
         this._school = school;
@@ -11,7 +11,7 @@ class Proclivity {
         this._basis = basis;
         this._source = source;
         this._element = element;
-        this._subCategory = subCategory;
+        this._subcategories = subcategories;
     }
     get name() {
         return this._name;
@@ -46,8 +46,8 @@ class Proclivity {
     get element() {
         return this._element;
     }
-    get subCategory() {
-        return this._subCategory;
+    get subcategories() {
+        return this._subcategories;
     }
 }
 const abacomancy = new Proclivity("ABACOMANCY", "USING SAND TO LEARN OF THE FUTURE", "DIVINATION", "CLAIRVOYANCE", true, false, false, ["ASTRAL", "PHYSICAL"], [], ["ELEMENTAL"], ["EARTH"], []);
@@ -78,11 +78,11 @@ proclivities.forEach(proclivity => {
         <td>${proclivity.basis.join(", ")}</td>
         <td>${proclivity.source.join(", ")}</td>
         <td>${proclivity.element.join(", ")}</td>
-        <td>${proclivity.subCategory.join(", ")}</td>
+        <td>${proclivity.subcategories.join(", ")}</td>
     </tr>`;
 });
 
-const filterableColumns = ["plane", "basis"/*, "source", "element", "subCategory"*/];
+const filterableColumns = ["plane", "basis", "source", "element", "subcategories"];
 
 // filter rows by selected attribute
 const filterRows = () => {
@@ -97,7 +97,7 @@ const filterRows = () => {
     };
     for (let i = 0; i < document.getElementsByClassName("proclivityRow").length; i++) {
         document.getElementsByClassName("proclivityRow")[i].style.display = "none";
-        if (filterTest("plane", i) && filterTest("basis", i)) document.getElementsByClassName("proclivityRow")[i].style.display = "table-row";
+        if (!filterableColumns.filter(column => {return !filterTest(column, i);}).length) document.getElementsByClassName("proclivityRow")[i].style.display = "table-row";
     }
 };
 
