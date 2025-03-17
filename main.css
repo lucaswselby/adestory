@@ -1,9 +1,16 @@
+body {
+    background-color: blanchedalmond;
+}
+
 table, td, th {
     border: solid black 1px;
 }
 table {
     border-collapse: collapse;
     border-width: 2px;
+}
+th {
+    font-size: 2em;
 }
 
 .filterDiv {
