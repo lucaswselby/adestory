@@ -4,10 +4,13 @@ body {
 
 table, td, th {
     border: solid black 1px;
+    border-right-color: gray;
+    border-left-color: gray;
 }
 table {
     border-collapse: collapse;
     border-width: 2px;
+    border-color: black;
 }
 th {
     font-size: 2em;
