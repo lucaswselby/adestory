@@ -3,6 +3,7 @@ table, td, th {
 }
 table {
     border-collapse: collapse;
+    border-width: 2px;
 }
 
 .filterDiv {
