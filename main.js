@@ -60,7 +60,9 @@ const animalMastery = new Proclivity("ANIMAL MASTERY", "KNOWLEDGE OF ANIMALS AND
 const animancy = new Proclivity("ANIMANCY", "USING TECHNOLOGY TO MANIUPLATE THE SOUL OR LIFE FORCE", "NECROMANCY", "MANIPULATION", false, true, true, ["ASTRAL", "TECHNOLOGICAL"], [], ["MAN-MADE", "PERSON"], [], []);
 const anthropomancy = new Proclivity("ANTHROPOMANCY", "USING THE ENTRAILS OF A DECEASED OR DYING INDIVIDUAL TO LEARN OF THE FUTURE", "DIVINATION", "CLAIRVOYANCE", false, true, true, ["PHYSICAL"], ["DEATH"], ["PERSON"], [], []);
 const anxietyInducement = new Proclivity("ANXIETY INDUCEMENT", "CAUSE ANOTHER TO FEEL ANXIETY", "ENCHANTMENT", "CREATION", false, true, true, ["MENTAL"], ["EMOTION"], ["PERSON"], [], []);
-const proclivities = [abacomancy, adaptation, ancestralCommunication, ancestralKnowledge, angerInducement, animalCommunication, animalMastery, animancy, anthropomancy, anxietyInducement];
+const apotropaic = new Proclivity("APOTROPAIC", "POWER TO AVERT EVIL INFLUENCES", "ABJURATION", "RESISTANCE", false, false, true, ["ASTRAL"], ["BLESSING"], ["MAGIC"], [], []);
+const architecturalManipulation = new Proclivity("ARCHITECTURAL MANIPULATION", "CHANGE THE ARCHITECTURE OF MAN-MADE STRUCTURES", "TRANSMUTATION", "MANIPULATION", true, false, false, ["PHYSICAL"], [], ["MAN-MADE"], [], []);
+const proclivities = [abacomancy, adaptation, ancestralCommunication, ancestralKnowledge, angerInducement, animalCommunication, animalMastery, animancy, anthropomancy, anxietyInducement, apotropaic, architecturalManipulation];
 
 // fill proclivities tables
 proclivities.forEach(proclivity => {
