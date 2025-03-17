@@ -74,11 +74,11 @@ proclivities.forEach(proclivity => {
         <td>${proclivity.env ? "&#10004;" : ""}</td>
         <td>${proclivity.self ? "&#10004;" : ""}</td>
         <td>${proclivity.others ? "&#10004;" : ""}</td>
-        <td>${proclivity.plane}</td>
-        <td>${proclivity.basis}</td>
-        <td>${proclivity.source}</td>
-        <td>${proclivity.element}</td>
-        <td>${proclivity.subCategory}</td>
+        <td>${proclivity.plane.join(", ")}</td>
+        <td>${proclivity.basis.join(", ")}</td>
+        <td>${proclivity.source.join(", ")}</td>
+        <td>${proclivity.element.join(", ")}</td>
+        <td>${proclivity.subCategory.join(", ")}</td>
     </tr>`;
 });
 
