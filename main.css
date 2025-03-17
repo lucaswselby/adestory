@@ -6,6 +6,7 @@ table, td, th {
     border: solid black 1px;
     border-right-color: gray;
     border-left-color: gray;
+    text-align: center;
 }
 table {
     border-collapse: collapse;
