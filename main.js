@@ -93,6 +93,7 @@ const fillSelect = filter => {
     });
 };
 fillSelect("plane");
+fillSelect("basis");
 
 const selectFilter = filter => {
     document.getElementById(`${filter}FilterSelect`).onchange = () => {
@@ -110,6 +111,7 @@ const selectFilter = filter => {
     };
 };
 selectFilter("plane");
+selectFilter("basis");
 
 // click planeJust
 document.getElementById("planeJust").onclick = () => {
@@ -144,3 +146,4 @@ const expandButton = filter => {
     };
 };
 expandButton("plane");
+expandButton("basis");
