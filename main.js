@@ -34,19 +34,19 @@ class Proclivity {
     get others() {
         return this._others;
     }
-    get planes() {
+    get plane() {
         return this._planes;
     }
-    get bases() {
+    get basis() {
         return this._bases;
     }
-    get sources() {
+    get source() {
         return this._sources;
     }
-    get elements() {
+    get element() {
         return this._elements;
     }
-    get subCategories() {
+    get subCategory() {
         return this._subCategories;
     }
 }
@@ -72,67 +72,75 @@ proclivities.forEach(proclivity => {
         <td>${proclivity.env ? "&#10004;" : ""}</td>
         <td>${proclivity.self ? "&#10004;" : ""}</td>
         <td>${proclivity.others ? "&#10004;" : ""}</td>
-        <td>${proclivity.planes}</td>
-        <td>${proclivity.bases}</td>
-        <td>${proclivity.sources}</td>
-        <td>${proclivity.elements}</td>
-        <td>${proclivity.subCategories}</td>
+        <td>${proclivity.plane}</td>
+        <td>${proclivity.basis}</td>
+        <td>${proclivity.source}</td>
+        <td>${proclivity.element}</td>
+        <td>${proclivity.subCategory}</td>
     </tr>`;
 });
 
-// fill planeFilterSelect
-let planes = [];
-proclivities.forEach(proclivity => {
-    proclivity.planes.forEach(plane => {
-        if (!planes.includes(plane)) planes.push(plane);
+// fill filter selects
+const fillSelect = filter => {
+    let options = [];
+    proclivities.forEach(proclivity => {
+        proclivity[filter].forEach(option => {
+            if (!options.includes(option)) options.push(option);
+        });
     });
-});
-planes.forEach(plane => {
-    document.getElementById("planeFilterSelect").innerHTML += `<option value="${plane}">${plane}</option>`;
-});
-
-// select plane
-document.getElementById("planeFilterSelect").onchange = () => {
-    for (let i = 0; i < document.getElementsByClassName("proclivityRow").length; i++) {
-        document.getElementsByClassName("proclivityRow")[i].style.display = "table-row";
-        if (document.getElementById("planeFilterSelect").value && ( // planeFilterSelect not empty
-            (!proclivities[i].planes.includes(document.getElementById("planeFilterSelect").value)) || 
-            // just checkbox
-            (document.getElementById("planeJust").checked && (
-                proclivities[i].planes.length !== 1 || 
-                proclivities[i].planes[0] !== document.getElementById("planeFilterSelect").value
-            ))
-        )) document.getElementsByClassName("proclivityRow")[i].style.display = "none";
-    }
+    options.forEach(option => {
+        document.getElementById(`${filter}FilterSelect`).innerHTML += `<option value="${option}">${option}</option>`;
+    });
 };
+fillSelect("plane");
+
+const selectFilter = filter => {
+    document.getElementById(`${filter}FilterSelect`).onchange = () => {
+        for (let i = 0; i < document.getElementsByClassName("proclivityRow").length; i++) {
+            if (true/* TO-DO: account for other filters */) document.getElementsByClassName("proclivityRow")[i].style.display = "table-row";
+            if (document.getElementsByClassName("proclivityRow")[i].style.display !== "none" && document.getElementById(`${filter}FilterSelect`).value && ( // select input not empty
+                (!proclivities[i][filter.toLowerCase()].includes(document.getElementById(`${filter}FilterSelect`).value)) || 
+                // just checkbox
+                (document.getElementById(`${filter}Just`).checked && (
+                    proclivities[i][filter].length !== 1 || 
+                    proclivities[i][filter][0] !== document.getElementById(`${filter}FilterSelect`).value
+                ))
+            )) document.getElementsByClassName("proclivityRow")[i].style.display = "none";
+        }
+    };
+};
+selectFilter("plane");
 
 // click planeJust
 document.getElementById("planeJust").onclick = () => {
     if (document.getElementById("planeFilterSelect").value) {
         if (document.getElementById("planeJust").checked) {
             for (let i = 0; i < document.getElementsByClassName("proclivityRow").length; i++) {
-                if (document.getElementsByClassName("proclivityRow")[i].style.display !== "none" && (proclivities[i].planes.length !== 1 || proclivities[i].planes[0] !== document.getElementById("planeFilterSelect").value)) document.getElementsByClassName("proclivityRow")[i].style.display = "none";
+                if (document.getElementsByClassName("proclivityRow")[i].style.display !== "none" && (proclivities[i].plane.length !== 1 || proclivities[i].plane[0] !== document.getElementById("planeFilterSelect").value)) document.getElementsByClassName("proclivityRow")[i].style.display = "none";
             }
         }
         else {
             for (let i = 0; i < document.getElementsByClassName("proclivityRow").length; i++) {
-                if (document.getElementsByClassName("proclivityRow")[i].style.display === "none" && proclivities[i].planes.includes(document.getElementById("planeFilterSelect").value)) document.getElementsByClassName("proclivityRow")[i].style.display = "table-row";
+                if (document.getElementsByClassName("proclivityRow")[i].style.display === "none" && proclivities[i].plane.includes(document.getElementById("planeFilterSelect").value)) document.getElementsByClassName("proclivityRow")[i].style.display = "table-row";
             }
         }
     }
 };
 
-// plane filter button
-let planeFilterButtonExpanded = false;
-document.getElementById("planeFilterButton").onclick = () => {
-    if ((planeFilterButtonExpanded)) {
-        document.getElementById("planeFilterDiv").style.display = "none";
-        document.getElementById("planeFilterButton").innerHTML = "&#9660;";
-        planeFilterButtonExpanded = false;
-    }
-    else {
-        document.getElementById("planeFilterDiv").style.display = "block";
-        document.getElementById("planeFilterButton").innerHTML = "&#9650;";
-        planeFilterButtonExpanded = true;
-    }
+// filter expand buttons
+const expandButton = filter => {
+    let filterExpanded = false;
+    document.getElementById(`${filter}FilterButton`).onclick = () => {
+        if ((filterExpanded)) {
+            document.getElementById(`${filter}FilterDiv`).style.display = "none";
+            document.getElementById(`${filter}FilterButton`).innerHTML = "&#9660;";
+            filterExpanded = false;
+        }
+        else {
+            document.getElementById(`${filter}FilterDiv`).style.display = "block";
+            document.getElementById(`${filter}FilterButton`).innerHTML = "&#9650;";
+            filterExpanded = true;
+        }
+    };
 };
+expandButton("plane");

@@ -32,7 +32,19 @@
                             </select>
                         </div>
                     </th>
-                    <th>BASIS</th>
+                    <th>
+                        BASIS <button id="basisFilterButton">&#9660;</button>
+                        <div class="filterDiv" id="basisFilterDiv">
+                            <div>
+                                <input type="checkbox" name="basisJust" id="basisJust">
+                                <label for="basisJust">Just</label>
+                            </div>
+                            <select name="basisFilterSelect" id="basisFilterSelect">
+                                <option value=""></option>
+                                <!-- filled by main.js -->
+                            </select>
+                        </div>
+                    </th>
                     <th>SOURCE</th>
                     <th>ELEMENT</th>
                     <th>SUB CATEGORIES</th>
