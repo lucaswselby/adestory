@@ -313,21 +313,6 @@ filterableColumns.forEach(column => {
         document.getElementById(`${column}FilterSelect`).innerHTML += `<option value="${option}">${option}</option>`;
     });
 
-    // filter expand buttons
-    let filterExpanded = false;
-    document.getElementById(`${column}FilterButton`).onclick = () => {
-        if ((filterExpanded)) {
-            document.getElementById(`${column}FilterDiv`).style.display = "none";
-            document.getElementById(`${column}FilterButton`).innerHTML = "&#9660;";
-            filterExpanded = false;
-        }
-        else {
-            document.getElementById(`${column}FilterDiv`).style.display = "block";
-            document.getElementById(`${column}FilterButton`).innerHTML = "&#9650;";
-            filterExpanded = true;
-        }
-    };
-
     document.getElementById(`${column}FilterSelect`).onchange = filterRows;
     document.getElementById(`${column}Just`).onchange = filterRows;
 });
