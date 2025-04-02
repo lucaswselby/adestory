@@ -17,22 +17,14 @@
             </ul></nav>
         </header>
         <main>
-            <table id="housesTable">
-                <thead>
-                    <tr>
-                        <th>HOUSE</th>
-                        <th>ORIGINAL</th>
-                        <th>ACTIVE</th>
-                        <th>PEOPLE IN THE FAMILY</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- filled by houses.js -->
-                </tbody>
-            </table>
+            <label for="family">Family:</label>
+            <select name="family" id="family">
+                <!-- filled by tree.js -->
+            </select>
+            <div id="tree"></div>
         </main>
     </body>
 
     <script type="text/javascript" src="housesList.js"></script>
-    <script type="text/javascript" src="houses.js"></script>
+    <script type="text/javascript" src="tree.js"></script>
 </html>

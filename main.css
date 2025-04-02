@@ -3,6 +3,10 @@ body {
     font-family:'Courier New', Courier, monospace;
 }
 
+main {
+    text-align: center;
+}
+
 table, td, th {
     border: solid black 1px;
     border-right-color: gray;
