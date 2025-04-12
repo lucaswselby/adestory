@@ -24,6 +24,13 @@ class House {
     get people() {
         return this._people;
     }
+    get colSpan() { // determined by the combined colspan of its children, which are determined by the combined colspan of their children, and so on
+        let children = this.founded.filter(house => {return !house.original;});
+        if (children.length) {
+            return children.reduce((prev, next) => {return prev + next.colSpan;}, 0);
+        }
+        return 1; // min colspan
+    }
 }
 const eabhacdon = new House("EABHACDON", true, false, [], ["", "", "", "", "", "", ""]);
 const tatlonghari = new House("TATLONGHARI", false, true, [], ["", "", "", "", "", ""]);
