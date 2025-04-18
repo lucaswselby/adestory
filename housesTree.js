@@ -6,21 +6,33 @@ for (let i = 1; i < originalHouses.length; i++) {
     originalHouses[i] = originalHouses[i - 1].founded[0];
 }
 originalHouses.forEach(house => {
-    document.getElementsByTagName("THEAD")[0].getElementsByTagName("TR")[0].innerHTML += `<td id="${house.name.replaceAll(".", "")}">${house.name}</td>`;
+    document.getElementsByTagName("THEAD")[0].getElementsByTagName("TR")[0].innerHTML += `<td colspan="${house.colSpan}" id="${house.name.replaceAll(".", "")}">${house.name}</td>`;
 });
 
-// fill table body with descendants of original houses
-let parentHouses = [...originalHouses];
-document.getElementsByTagName("TBODY")[0].innerHTML += "<tr></tr>";
-parentHouses.forEach(parentHouse => {
-    let childHouses = parentHouse.founded.filter(house => {return !parentHouses.includes(house)});
-    if (childHouses.length) {
-        document.getElementById(parentHouse.name.replaceAll(".", "")).colSpan = parseInt(document.getElementById(parentHouse.name.replaceAll(".", "")).colSpan) + childHouses.length - 1; // updates colspan of parent house
-        childHouses.forEach(childHouse => {
-            document.getElementsByTagName("TR")[document.getElementsByTagName("TR").length - 1].innerHTML += `<td id="${childHouse.name}">${childHouse.name}</td>`;
-        });
-    }
-    else {
-        document.getElementsByTagName("TR")[document.getElementsByTagName("TR").length - 1].innerHTML += "<td></td>"
-    }
-});
+// create the next row of houses
+// ARG and RETURN: array where elements are repeated if they take up multiple columns
+const rowAfter = parentRow => {
+    let childRow = [];
+    parentRow.forEach(parentHouse => {
+        let childHouses = parentHouse ? parentHouse.founded.filter(house => {return !house.original;}) : [];
+        if (childHouses.length) {
+            childHouses.forEach(childHouse => {
+                childRow.push(childHouse);
+            });
+        }
+        else childRow.push(null);
+    });
+    return childRow;
+};
+
+// add the next row to the table
+const addRowAfter = parentRow => {
+    document.getElementsByTagName("TBODY")[0].innerHTML += "<tr></tr>";
+    let childRow = rowAfter(parentRow);
+    childRow.forEach(house => {
+        document.getElementsByTagName("TR")[document.getElementsByTagName("TR").length - 1].innerHTML += (house ? `<td colspan="${house.colSpan}" id="${house.name}">${house.name}</td>` : "<td></td>");
+    });
+    if (childRow.filter(child => {if (child) return child;}).length) return addRowAfter(childRow);
+}
+addRowAfter(originalHouses);
+document.getElementsByTagName("TR")[document.getElementsByTagName("TR").length - 1].remove();
