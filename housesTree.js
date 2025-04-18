@@ -9,9 +9,9 @@ originalHouses.forEach(house => {
     document.getElementsByTagName("THEAD")[0].getElementsByTagName("TR")[0].innerHTML += `<td colspan="${house.colSpan}" id="${house.name.replaceAll(".", "")}">${house.name}</td>`;
 });
 
-// create the next row of houses
-// ARG and RETURN: array where elements are repeated if they take up multiple columns
-const rowAfter = parentRow => {
+// add the next row to the table
+const addRowAfter = parentRow => {
+    document.getElementsByTagName("TBODY")[0].innerHTML += "<tr></tr>";
     let childRow = [];
     parentRow.forEach(parentHouse => {
         let childHouses = parentHouse ? parentHouse.founded.filter(house => {return !house.original;}) : [];
@@ -22,13 +22,6 @@ const rowAfter = parentRow => {
         }
         else childRow.push(null);
     });
-    return childRow;
-};
-
-// add the next row to the table
-const addRowAfter = parentRow => {
-    document.getElementsByTagName("TBODY")[0].innerHTML += "<tr></tr>";
-    let childRow = rowAfter(parentRow);
     childRow.forEach(house => {
         document.getElementsByTagName("TR")[document.getElementsByTagName("TR").length - 1].innerHTML += (house ? `<td colspan="${house.colSpan}" id="${house.name}">${house.name}</td>` : "<td></td>");
     });
