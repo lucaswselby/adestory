@@ -1,6 +1,6 @@
 class Character {
-    constructor(fullName, house, secondaryHouse, role, familyGen, genEst, gender, proclivity) {
-        this._fullName = fullName;
+    constructor(name, house, secondaryHouse, role, familyGen, genEst, gender, proclivity) {
+        this._name = name;
         this._house = house;
         this._secondaryHouse = secondaryHouse;
         this._role = role;
@@ -9,8 +9,8 @@ class Character {
         this._gender = gender;
         this._proclivity = proclivity;
     }
-    get fullName() {
-        return this._fullName;
+    get name() {
+        return this._name;
     }
     get house() {
         return this._house;
