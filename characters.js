@@ -15,6 +15,12 @@ class Character {
     get house() {
         return this._house;
     }
+    get secondaryHouse() {
+        return this._secondaryHouse;
+    }
+    get role() {
+        return this._role;
+    }
     get familyGen() {
         return this._familyGen;
     }
