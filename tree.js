@@ -41,11 +41,11 @@ const displayFamilyTree = () => {
     const rows = [];
     for (let i = 0; i < familyMembers.length; i++) {
         const row = document.createElement("TR");
-        row.innerHTML = `<td class="character" colspan="${Math.pow(2, i)}">${familyMembers[i].name}</td>`;
+        row.innerHTML = `<td colspan="${Math.pow(2, i)}">${familyMembers[i].name}</td>`;
 
         // add secondaryHouses to the family tree
         if (i > 0) {
-            rows[rows.length - 1].innerHTML += `<td class="house">${familyMembers[i].secondaryHouse ? familyMembers[i].secondaryHouse.name : "OTHER"}</td>`;
+            rows[rows.length - 1].innerHTML += `<td colspan="${Math.pow(2, i - 1)}">${familyMembers[i].secondaryHouse ? familyMembers[i].secondaryHouse.name : "OTHER"}</td>`;
         }
 
         rows.push(row);
