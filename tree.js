@@ -23,7 +23,7 @@ const displayFamilyTree = () => {
 
     // prep familyMembers for display
     const family = document.getElementById("family").value;
-    let familyMembers = characters.filter(character => {return character.house === family;}).sort((a, b) => { // sort familyMembers so "Notable" is at the end
+    let familyMembers = characters.filter(character => {return character.house.name === family;}).sort((a, b) => { // sort familyMembers so "Notable" is at the end
         if (a.role < b.role) return -1;
         if (a.role > b.role) return 1;
         return 0;
@@ -38,14 +38,14 @@ const displayFamilyTree = () => {
     }
 
     // format familyMembers into a family tree
-    let rows = [];
+    const rows = [];
     for (let i = 0; i < familyMembers.length; i++) {
         const row = document.createElement("TR");
-        row.innerHTML = `<td colspan="${Math.pow(2, i)}">${familyMembers[i].name}</td>`;
+        row.innerHTML = `<td class="character" colspan="${Math.pow(2, i)}">${familyMembers[i].name}</td>`;
 
         // add secondaryHouses to the family tree
         if (i > 0) {
-            rows[rows.length - 1].innerHTML += `<td>${familyMembers[i].secondaryHouse}</td>`;
+            rows[rows.length - 1].innerHTML += `<td class="house">${familyMembers[i].secondaryHouse ? familyMembers[i].secondaryHouse.name : "OTHER"}</td>`;
         }
 
         rows.push(row);
