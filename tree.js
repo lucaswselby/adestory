@@ -45,7 +45,7 @@ const displayFamilyTree = () => {
 
         // add secondaryHouses to the family tree
         if (i > 0) {
-            rows[rows.length - 1].innerHTML += `<td colspan="${Math.pow(2, i - 1)}">${familyMembers[i].secondaryHouse ? familyMembers[i].secondaryHouse.name : "OTHER"}</td>`;
+            rows[rows.length - 1].innerHTML += `<td colspan="${Math.pow(2, i - 1)}">${familyMembers[i].secondaryHouse.name}</td>`;
         }
 
         rows.push(row);

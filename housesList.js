@@ -105,6 +105,7 @@ const carvalho = new House("CARVALHO", true, true, [figueroa], ["", "", "", "", 
 const tran = new House("TRAN", true, true, [carvalho], ["", "", "", "", "", ""]);
 zyma.founded = [tran];
 const houses = [adakai, ahmedhan, alavonzaro, almufti, arkwright, bennett, beraszafer, blythe, botzami, cappallo, carvalho, castillo, crassus, cromwell, cronje, delaurante, dovorak, eabhacdon, espinosa, etienne, faragulski, figueroa, gallig, godfrey, haryanka, havili, haylock, huang, idirissi, issako, jolicoeur, kasabian, krowe, leskai, li, liavaa, maldonado, mavoungou, mavros, merovingian, nagata, nakatsuomi, ohara, ong, orlov, otieno, palladino, paora, patenaude, pendergast, phiri, quijada, ragensterne, rashtrakurtha, rybamerc, salazar, salucnar, sharrow, stJoseph, tatlonghari, taylor, tran, tshireletso, vanDerReede, vang, vidrogotchen, waldington, weirski, xydias, zaitsev, zyma];
+const other = new House("OTHER", false, true, [], []);
 
 // check each house for multiple parents
 let singleParentHouses = [];
