@@ -50,6 +50,24 @@ const displayFamilyTree = () => {
 
         rows.push(row);
     }
+
+    // add more houses
+    for (let i = 0; i < rows.length - 2; i++) { // i is the last row being added to
+        for (let j = i; j >= 0; j--) { // j is the current row being added to
+            const firstRow = rows[j];
+            const secondRowElems = rows[j + 1].getElementsByTagName("TD");
+            const secondRowLast = secondRowElems[secondRowElems.length - 1];
+            const houseNames = houses.map(house => {return house.name;});
+            const secondRowLastHouse = houses[houseNames.indexOf(secondRowLast.innerHTML)];
+            const secondRowLastHouseParent = houses.filter(house => {return house.founded.includes(secondRowLastHouse);})[0];
+            if (j < i) {
+                firstRow.innerHTML += `<td colspan="${Math.pow(2, i + 1) - Math.pow(2, j + 1)}"></td>`;
+            }
+            firstRow.innerHTML += `<td colspan="${Math.pow(2, j)}">${secondRowLast.innerHTML}</td><td colspan="${Math.pow(2, j)}">${secondRowLastHouseParent.name}</td>`;
+        }
+    }
+
+    // display family tree
     rows.forEach(row => {document.getElementById("tree").appendChild(row);});
 };
 displayFamilyTree();
