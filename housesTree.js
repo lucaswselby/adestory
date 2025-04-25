@@ -6,7 +6,7 @@ for (let i = 1; i < originalHouses.length; i++) {
     originalHouses[i] = originalHouses[i - 1].founded[0];
 }
 originalHouses.forEach(house => {
-    document.getElementsByTagName("THEAD")[0].getElementsByTagName("TR")[0].innerHTML += `<td colspan="${house.colSpan}" id="${house.name.replaceAll(".", "")}">${house.name}</td>`;
+    document.getElementsByTagName("THEAD")[0].getElementsByTagName("TR")[0].innerHTML += `<td colspan="${house.colSpan}" id="${house.name.replaceAll(".", "")}"><a href="./familyTree.html?family=${house.name}">${house.name}</a></td>`;
 });
 
 // add the next row to the table
@@ -23,7 +23,7 @@ const addRowAfter = parentRow => {
         else childRow.push(null);
     });
     childRow.forEach(house => {
-        document.getElementsByTagName("TR")[document.getElementsByTagName("TR").length - 1].innerHTML += (house ? `<td colspan="${house.colSpan}" id="${house.name}">${house.name}</td>` : "<td></td>");
+        document.getElementsByTagName("TR")[document.getElementsByTagName("TR").length - 1].innerHTML += (house ? `<td colspan="${house.colSpan}" id="${house.name}"><a href="./familyTree.html?family=${house.name}">${house.name}</a></td>` : "<td></td>");
     });
     if (childRow.filter(child => {if (child) return child;}).length) return addRowAfter(childRow);
 }
