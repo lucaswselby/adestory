@@ -51,24 +51,26 @@ const displayFamilyTree = () => {
         rows.push(row);
     }
 
+    // display family tree
+    rows.forEach(row => {document.getElementById("tree").appendChild(row);});
+
     // add more houses
     for (let i = 0; i < rows.length - 2; i++) { // i is the last row being added to
         for (let j = i; j >= 0; j--) { // j is the current row being added to
             const firstRow = rows[j];
             const secondRowElems = rows[j + 1].getElementsByTagName("TD");
             const secondRowLast = secondRowElems[secondRowElems.length - 1].getElementsByTagName("SPAN")[0];
-            const houseNames = houses.map(house => {return house.name;});
-            const secondRowLastHouse = houses[houseNames.indexOf(secondRowLast.innerHTML)];
-            const secondRowLastHouseParent = houses.filter(house => {return house.founded.includes(secondRowLastHouse);})[0];
-            if (j < i) {
-                firstRow.innerHTML += `<td colspan="${Math.pow(2, i + 1) - Math.pow(2, j + 1)}"></td>`;
+            if (secondRowLast.innerHTML !== "OTHER") {
+                const houseNames = houses.map(house => {return house.name;});
+                const secondRowLastHouse = houses[houseNames.indexOf(secondRowLast.innerHTML)];
+                const secondRowLastHouseParent = houses.filter(house => {return house.founded.includes(secondRowLastHouse);})[0];
+                if (j < i) {
+                    firstRow.innerHTML += `<td colspan="${Math.pow(2, i + 1) - Math.pow(2, j + 1)}"></td>`;
+                }
+                firstRow.innerHTML += `<td class="leftCell" colspan="${Math.pow(2, j)}"><span>${secondRowLast.innerHTML}</span></td><td class="rightCell" colspan="${Math.pow(2, j)}"><span>${secondRowLastHouseParent.name}</span></td>`;
             }
-            firstRow.innerHTML += `<td class="leftCell" colspan="${Math.pow(2, j)}"><span>${secondRowLast.innerHTML}</span></td><td class="rightCell" colspan="${Math.pow(2, j)}"><span>${secondRowLastHouseParent.name}</span></td>`;
         }
     }
-
-    // display family tree
-    rows.forEach(row => {document.getElementById("tree").appendChild(row);});
 };
 displayFamilyTree();
 document.getElementById("family").onchange = displayFamilyTree;
