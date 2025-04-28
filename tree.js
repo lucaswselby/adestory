@@ -41,11 +41,11 @@ const displayFamilyTree = () => {
     const rows = [];
     for (let i = 0; i < familyMembers.length; i++) {
         const row = document.createElement("TR");
-        row.innerHTML = `<td colspan="${Math.pow(2, i)}">${familyMembers[i].name}</td>`;
+        row.innerHTML = `<td ${i < familyMembers.length - 1 ? `class="leftCell" ` : ""}colspan="${Math.pow(2, i)}"><span>${familyMembers[i].name}</span></td>`; // all span elements help with styling
 
         // add secondaryHouses to the family tree
         if (i > 0) {
-            rows[rows.length - 1].innerHTML += `<td colspan="${Math.pow(2, i - 1)}">${familyMembers[i].secondaryHouse.name}</td>`;
+            rows[rows.length - 1].innerHTML += `<td class="rightCell" colspan="${Math.pow(2, i - 1)}"><span>${familyMembers[i].secondaryHouse.name}</span></td>`;
         }
 
         rows.push(row);
@@ -56,14 +56,14 @@ const displayFamilyTree = () => {
         for (let j = i; j >= 0; j--) { // j is the current row being added to
             const firstRow = rows[j];
             const secondRowElems = rows[j + 1].getElementsByTagName("TD");
-            const secondRowLast = secondRowElems[secondRowElems.length - 1];
+            const secondRowLast = secondRowElems[secondRowElems.length - 1].getElementsByTagName("SPAN")[0];
             const houseNames = houses.map(house => {return house.name;});
             const secondRowLastHouse = houses[houseNames.indexOf(secondRowLast.innerHTML)];
             const secondRowLastHouseParent = houses.filter(house => {return house.founded.includes(secondRowLastHouse);})[0];
             if (j < i) {
                 firstRow.innerHTML += `<td colspan="${Math.pow(2, i + 1) - Math.pow(2, j + 1)}"></td>`;
             }
-            firstRow.innerHTML += `<td colspan="${Math.pow(2, j)}">${secondRowLast.innerHTML}</td><td colspan="${Math.pow(2, j)}">${secondRowLastHouseParent.name}</td>`;
+            firstRow.innerHTML += `<td class="leftCell" colspan="${Math.pow(2, j)}"><span>${secondRowLast.innerHTML}</span></td><td class="rightCell" colspan="${Math.pow(2, j)}"><span>${secondRowLastHouseParent.name}</span></td>`;
         }
     }
 
