@@ -90,3 +90,4 @@ displayFamilyTree();
 document.getElementById("family").onchange = displayFamilyTree;
 resizeTable();
 window.onresize = resizeTable;
+document.getElementById("selectFamily").style.left = `calc(50% - ${document.getElementById("selectFamily").clientWidth / 2}px)`; // positions family selector in the middle of the screen
