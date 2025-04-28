@@ -17,6 +17,18 @@ function querySt(ji) {
 }
 if (querySt("family")) document.getElementById('family').value = querySt("family").replaceAll("%27", "'").replaceAll("%20", " ");
 
+// resize table to avoid huge vertical cells
+const resizeTable = () => {
+    let tableWidth = 100;
+    document.getElementsByTagName("TABLE")[0].style.width = `${tableWidth}%`;
+    for (let i = 0; i < document.getElementsByTagName("TD").length - 1; i++) {
+        if (document.getElementsByTagName("TD")[i].clientHeight > document.getElementsByTagName("TD")[document.getElementsByTagName("TD").length - 1].clientHeight) { 
+            document.getElementsByTagName("TABLE")[0].style.width = `${tableWidth++}%`;
+            i--;
+        }
+    }
+};
+
 // display family tree
 const displayFamilyTree = () => {
     while (document.getElementById("tree").getElementsByTagName("TR")[0]) document.getElementById("tree").getElementsByTagName("TR")[0].remove();
@@ -71,6 +83,10 @@ const displayFamilyTree = () => {
             }
         }
     }
+    resizeTable();
 };
+
 displayFamilyTree();
 document.getElementById("family").onchange = displayFamilyTree;
+resizeTable();
+window.onresize = resizeTable;
